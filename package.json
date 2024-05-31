@@ -1,0 +1,30 @@
+{
+  "name": "utils-ts",
+  "version": "1.0.0",
+  "description": "A fórmula Haversine é uma equação matemática que nos ajuda a calcular a distância entre dois pontos na Terra, usando suas coordenadas de latitude e longitude. Como a Terra é redonda, essa fórmula leva em conta a curvatura do planeta para determinar a distância mais precisa possível.",
+  "main": "Haversine-formula.ts",
+  "scripts": {
+    "start": "ts-node dist/Haversine-formula.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guicastro13/utils-ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guicastro13/utils-ts/issues"
+  },
+  "homepage": "https://github.com/guicastro13/utils-ts#readme",
+  "devDependencies": {
+    "ts-jest": "^29.1.4",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-node": "^10.9.2"
+  }
+}
