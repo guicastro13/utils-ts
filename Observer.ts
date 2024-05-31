@@ -1,61 +1,51 @@
 interface Observer {
-  update(subject: Subject): void;
+  update(eventType: string, data: any): void;
 }
 
-class ConcreteObserverA implements Observer {
-  public update(subject: Subject): void {
-    if (subject.state < 3) {
-      console.log("ConcreteObserverA: Reacted to the event.");
-    }
-  }
-}
-
-class ConcreteObserverB implements Observer {
-  public update(subject: Subject): void {
-    if (subject.state === 0 || subject.state >= 2) {
-      console.log("ConcreteObserverB: Reacted to the event.");
-    }
+class UserNotifier implements Observer {
+  public update(eventType: string, data: any): void {
+    console.log(
+      `UserNotifier: ${eventType} event received with data: ${JSON.stringify(
+        data
+      )}`
+    );
   }
 }
 
-class Subject {
-  public state: number = 0;
-  private observers: Observer[] = [];
-
-  public attach(observer: Observer): void {
-    const isExist = this.observers.includes(observer);
-    if (isExist) {
-      return console.log("Subject: Observer has been attached already.");
-    }
-
-    console.log("Subject: Attached an observer.");
-    this.observers.push(observer);
-  }
-
-  public detach(observer: Observer): void {
-    const observerIndex = this.observers.indexOf(observer);
-    if (observerIndex === -1) {
-      return console.log("Subject: Nonexistent observer.");
-    }
-
-    this.observers.splice(observerIndex, 1);
-    console.log("Subject: Detached an observer.");
-  }
-
-  public notify(): void {
-    console.log("Subject: Notifying observers...");
-    for (const observer of this.observers) {
-      observer.update(this);
-    }
-  }
-
-  public someBusinessLogic(): void {
-    console.log("\nSubject: I'm doing something important.");
-    this.state = Math.floor(Math.random() * 10);
-
-    console.log(`Subject: My state has just changed to: ${this.state}`);
-    this.notify();
+class LoggingService implements Observer {
+  public update(eventType: string, data: any): void {
+    console.log(
+      `LoggingService: ${eventType} event logged with data: ${JSON.stringify(
+        data
+      )}`
+    );
   }
 }
 
-export { Subject, ConcreteObserverA, ConcreteObserverB };
+class UserEventManager {
+  private observers: { [key: string]: Observer[] } = {};
+
+  public subscribe(eventType: string, observer: Observer): void {
+    if (!this.observers[eventType]) {
+      this.observers[eventType] = [];
+    }
+    this.observers[eventType].push(observer);
+  }
+
+  public unsubscribe(eventType: string, observer: Observer): void {
+    const observerIndex = this.observers[eventType]?.indexOf(observer);
+    if (observerIndex !== undefined && observerIndex > -1) {
+      this.observers[eventType].splice(observerIndex, 1);
+    }
+  }
+
+  public notify(eventType: string, data: any): void {
+    if (this.observers[eventType]) {
+      for (const observer of this.observers[eventType]) {
+        observer.update(eventType, data);
+      }
+    }
+  }
+}
+
+export { UserEventManager, UserNotifier, LoggingService };

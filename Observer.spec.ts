@@ -1,19 +1,23 @@
-import { Subject, ConcreteObserverA, ConcreteObserverB } from "./Observer";
+import { UserEventManager, UserNotifier, LoggingService } from "./Observer";
 
 describe("Observer Pattern", () => {
-  it("should notify observers", () => {
-    const subject = new Subject();
-
-    const observer1 = new ConcreteObserverA();
-    const observer2 = new ConcreteObserverB();
-
-    subject.attach(observer1);
-    subject.attach(observer2);
+  it("should notify observers of user events", () => {
+    const eventManager = new UserEventManager();
+    const notifier = new UserNotifier();
+    const logger = new LoggingService();
 
     console.log = jest.fn();
 
-    subject.someBusinessLogic();
+    eventManager.subscribe("login", notifier);
+    eventManager.subscribe("login", logger);
 
-    expect(console.log).toHaveBeenCalled();
+    eventManager.notify("login", { user: "JohnDoe" });
+
+    expect(console.log).toHaveBeenCalledWith(
+      'UserNotifier: login event received with data: {"user":"JohnDoe"}'
+    );
+    expect(console.log).toHaveBeenCalledWith(
+      'LoggingService: login event logged with data: {"user":"JohnDoe"}'
+    );
   });
 });
