@@ -1,38 +1,42 @@
-interface Product {
-  operation(): string;
+interface DatabaseConnection {
+  connect(): string;
 }
 
-class ConcreteProductA implements Product {
-  public operation(): string {
-    return "Result of ConcreteProductA";
+class MySQLConnection implements DatabaseConnection {
+  public connect(): string {
+    return "Connected to MySQL";
   }
 }
 
-class ConcreteProductB implements Product {
-  public operation(): string {
-    return "Result of ConcreteProductB";
+class PostgreSQLConnection implements DatabaseConnection {
+  public connect(): string {
+    return "Connected to PostgreSQL";
   }
 }
 
-abstract class Creator {
-  public abstract factoryMethod(): Product;
+abstract class ConnectionFactory {
+  public abstract createConnection(): DatabaseConnection;
 
-  public someOperation(): string {
-    const product = this.factoryMethod();
-    return `Creator: The same creator's code has just worked with ${product.operation()}`;
+  public getConnection(): string {
+    const connection = this.createConnection();
+    return connection.connect();
   }
 }
 
-class ConcreteCreatorA extends Creator {
-  public factoryMethod(): Product {
-    return new ConcreteProductA();
+class MySQLConnectionFactory extends ConnectionFactory {
+  public createConnection(): DatabaseConnection {
+    return new MySQLConnection();
   }
 }
 
-class ConcreteCreatorB extends Creator {
-  public factoryMethod(): Product {
-    return new ConcreteProductB();
+class PostgreSQLConnectionFactory extends ConnectionFactory {
+  public createConnection(): DatabaseConnection {
+    return new PostgreSQLConnection();
   }
 }
 
-export { Creator, ConcreteCreatorA, ConcreteCreatorB };
+export {
+  ConnectionFactory,
+  MySQLConnectionFactory,
+  PostgreSQLConnectionFactory,
+};

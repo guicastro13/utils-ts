@@ -1,17 +1,13 @@
-import { ConcreteCreatorA, ConcreteCreatorB } from "./Factory";
+import { MySQLConnectionFactory, PostgreSQLConnectionFactory } from "./Factory";
 
-describe("Factory Method Pattern", () => {
-  it("should create ConcreteProductA", () => {
-    const creator = new ConcreteCreatorA();
-    expect(creator.someOperation()).toBe(
-      "Creator: The same creator's code has just worked with Result of ConcreteProductA"
-    );
+describe("ConnectionFactory", () => {
+  it("should create a MySQL connection", () => {
+    const factory = new MySQLConnectionFactory();
+    expect(factory.getConnection()).toBe("Connected to MySQL");
   });
 
-  it("should create ConcreteProductB", () => {
-    const creator = new ConcreteCreatorB();
-    expect(creator.someOperation()).toBe(
-      "Creator: The same creator's code has just worked with Result of ConcreteProductB"
-    );
+  it("should create a PostgreSQL connection", () => {
+    const factory = new PostgreSQLConnectionFactory();
+    expect(factory.getConnection()).toBe("Connected to PostgreSQL");
   });
 });
