@@ -1,3 +1,3 @@
-# Observer
+# Factory
 
-O padrão Observer define uma dependência um-para-muitos entre objetos, de forma que quando um objeto muda de estado, todos os seus dependentes são notificados e atualizados automaticamente.
+O padrão Factory Method define uma interface para criar um objeto, mas permite que as subclasses alterem o tipo de objeto que será criado.
