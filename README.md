@@ -1,3 +1,3 @@
-# Command
+# Proxy
 
-O Command pode ser utilizado para implementar um sistema de execução de tarefas que permite enfileirar e desfazer comandos.
+O padrão Proxy pode ser utilizado para controlar o acesso a um recurso, como um banco de dados, verificando permissões antes de permitir o acesso.
